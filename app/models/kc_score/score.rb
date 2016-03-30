@@ -10,6 +10,7 @@ module KcScore
     belongs_to :score_targetable, polymorphic: true
 
     validates :score, presence: true
+    validates :score_sourceable, uniqueness: {scope: :score_targetable}
   end
 end
 

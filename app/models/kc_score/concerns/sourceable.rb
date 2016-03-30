@@ -47,6 +47,8 @@ module KcScore
             # TODO 判断限制
             scores.create! score_targetable: target, score: score, text: text
           end
+
+          # TODO 是否已经添加
         end
       end
     end
