@@ -31,6 +31,15 @@ RSpec.describe KcScore::Concerns::Sourceable, type: :module do
         @course1 = create(:course)
         expect(@user.score_it(@course1, 1, '测试')).to be_valid
       end
+
+      it "#scored?" do
+        expect(@user.respond_to?(:score_it)).to be true
+
+        @course = create(:course)
+        expect(@user.scored?(@course)).to be false
+        @user.score_it(@course, 1)
+        expect(@user.scored?(@course)).to be true
+      end
     end
   end
 end

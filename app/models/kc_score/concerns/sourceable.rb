@@ -48,7 +48,9 @@ module KcScore
             scores.create score_targetable: target, score: score, text: text
           end
 
-          # TODO 是否已经添加
+          define_method :scored? do |target|
+            scores.where(score_targetable: target).any?
+          end
         end
       end
     end
