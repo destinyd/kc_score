@@ -28,14 +28,26 @@ module KcScore
             # no hash maybe array
             fields.each do |key|
               self.sourceable_collect[selfkey][key] = nil
+
+              key.to_s.camelize.constantize.class_eval do
+                include KcScore::Concerns::Targetable
+              end
             end
           else
             options.each do |key, val|
               case val.class.name
               when 'Array', 'Range'
                 self.sourceable_collect[selfkey][key] = val.to_a
+
+                key.to_s.camelize.constantize.class_eval do
+                  include KcScore::Concerns::Targetable
+                end
               when 'NilClass'
                 self.sourceable_collect[selfkey][key] = nil
+
+                key.to_s.camelize.constantize.class_eval do
+                  include KcScore::Concerns::Targetable
+                end
               else
               end
             end
