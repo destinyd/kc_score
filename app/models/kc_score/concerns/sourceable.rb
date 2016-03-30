@@ -45,7 +45,7 @@ module KcScore
 
           define_method :score_it do |target, score, text = nil|
             # TODO 判断限制
-            scores.create! score_targetable: target, score: score, text: text
+            scores.create score_targetable: target, score: score, text: text
           end
 
           # TODO 是否已经添加
