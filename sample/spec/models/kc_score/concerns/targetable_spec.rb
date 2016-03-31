@@ -23,6 +23,7 @@ RSpec.describe KcScore::Concerns::Targetable, type: :module do
   describe Photo, type: :model do
     before do
       @photo = Photo.create
+      @user = create(:user)
     end
 
     it "relationships" do
@@ -35,6 +36,13 @@ RSpec.describe KcScore::Concerns::Targetable, type: :module do
 
         # 因为没有评价，所以分值统计为0
         expect(@photo.score_of('user')).to eq 0
+      end
+
+      it "#score_by" do
+        expect(@photo.respond_to?(:score_by)).to be true
+
+        # 因为没有，返回nil
+        expect(@photo.score_by(@user)).to be_nil
       end
     end
   end
@@ -60,6 +68,19 @@ RSpec.describe KcScore::Concerns::Targetable, type: :module do
 
         @user2.score_it(@course, @score2, '你好')
         expect(@course.score_of('user2')).to eq @score1 + @score2
+      end
+
+      it "#score_by" do
+        @score1 = 1
+        @text = '测试'
+        expect(@course.score_by(@user1)).to be_nil
+
+        @user1.score_it(@course, @score1, @text)
+
+        @score = @course.score_by(@user1)
+        expect(@score).to_not be_nil
+        expect(@score.score).to eq @score1
+        expect(@score.text).to eq @text
       end
     end
   end
